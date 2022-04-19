@@ -13,7 +13,14 @@ app.use(express.json({limit:"5000kb"})) // 请求体参数是json结构：{name:
 
 // 注意顺序，挂载路由一定在解析请求后，否则读取不到请求体
 const indexRouter = require('./routers')
+const c = require('./routers/class')
+const course = require('./routers/course')
+const timetable = require('./routers/timetable')
 app.use('/', indexRouter)
+app.use('/', c)
+app.use('/', course)
+app.use('/', timetable)
+
 
 
 mongoose.connect('mongodb://localhost/eduction_system',{useNewUrlParser: true})
