@@ -114,6 +114,29 @@ router.get('/teacher-list', (req,res) => {
             res.send({ status: FAIL, msg: '获取教师列表失败'})
         })
 })
+// 更新用户
+router.post('/user-update', (req, res) => {
+    const { _id, username } = req.body
+    UserModel.findOne({ username })
+        .then(user => {
+            if (user && user.username !== username) {
+                res.send({ status: FAIL, msg: '已存在该用户名'})
+            } else {
+                UserModel.findOneAndUpdate({ _id }, req.body)
+                    .then(user => {
+                        res.send({ status: SUCCESS, data: user})
+                    })
+                    .catch(error => {
+                        console.log(error)
+                        res.send({ status: FAIL, msg: '更新用户失败'})
+                    })
+            }
+        })
+        .catch(error => {
+            console.log(error)
+            res.send({ status: FAIL, msg: '更新用户失败'})
+        })
+})
 // 启用用户
 router.post('/user-enable', (req,res) => {
     const { _id } = req.body
@@ -148,6 +171,22 @@ router.post('/user-delete', (req,res) => {
         .catch(error => {
             console.log(error)
             res.send({ status: FAIL, msg: '删除异常，请重新尝试'})
+        })
+})
+// 根据用户_id查询用户信息
+router.get('/user-information/:_id', (req,res) => {
+    const _id = req.params._id
+    UserModel.findOne({ _id })
+        .then(user => {
+            if (user) {
+                res.send({ status: SUCCESS, data: user })
+            } else {
+                res.send({ status: FAIL, msg: '未找到该用户'})
+            }
+        })
+        .catch(error => {
+            console.log(error)
+            res.send({ status: FAIL, msg: '查找用户失败'})
         })
 })
 // 根据用户名获取权限

@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema({
     role: { type: String, required: true },
     disabled: { type: Boolean, default: true },
     classBelong: {type: String, default: null },
+    testScore: { type: Number, default: -1 }
 })
 
 //定义Model(与集合对应，可以操作集合)

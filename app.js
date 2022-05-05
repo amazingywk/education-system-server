@@ -16,10 +16,14 @@ const indexRouter = require('./routers')
 const c = require('./routers/class')
 const course = require('./routers/course')
 const timetable = require('./routers/timetable')
+const paper = require('./routers/paper')
+const problem = require('./routers/problem')
 app.use('/', indexRouter)
 app.use('/', c)
 app.use('/', course)
 app.use('/', timetable)
+app.use('/', paper)
+app.use('/', problem)
 
 
 
