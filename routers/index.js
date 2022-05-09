@@ -114,6 +114,18 @@ router.get('/teacher-list', (req,res) => {
             res.send({ status: FAIL, msg: '获取教师列表失败'})
         })
 })
+// 招生
+router.post('/guest-student', (req,res) => {
+    const _id = req.body._id
+    UserModel.findOneAndUpdate({ _id }, { role: 'student' })
+        .then(user => {
+            res.send({ status: SUCCESS, data: user })
+        })
+        .catch(error => {
+            console.log(error)
+            res.send({ status: FAIL, msg: '修改失败，请重新尝试' })
+        })
+})
 // 更新用户
 router.post('/user-update', (req, res) => {
     const { _id, username } = req.body
@@ -213,6 +225,9 @@ router.get('/user-num', (req,res) => {
             let teacher = 0
             let student = 0
             let guest = 0
+            let pass = 0
+            let not = 0
+            let fail = 0
             users.map(user => {
                 switch (user.role) {
                     case 'teacher' :
@@ -226,7 +241,16 @@ router.get('/user-num', (req,res) => {
                         break
                 }
             })
-            res.send({ status: SUCCESS, data: { teacher, student, guest } })
+            users.map(user => {
+                if (user.testScore === -1) {
+                    not++
+                } else if (user.testScore<60) {
+                    pass++
+                } else {
+                    fail++
+                }
+            })
+            res.send({ status: SUCCESS, data: { people: { teacher, student, guest }, test: { not, pass, fail } } })
         })
         .catch(error => {
             console.log(error)

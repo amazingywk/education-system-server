@@ -80,6 +80,37 @@ router.post('/paper-list', (req,res) => {
         })
 })
 
+// 获取试卷可选项
+router.get('/paper-options', (req,res) => {
+    PaperModel.find()
+        .then(papers => {
+            let data = []
+            papers.map(paper => {
+                data.push({
+                    value: paper._id,
+                    label: paper.papername+'（'+paper.teacher[1]+'）',
+                })
+            })
+            res.send({ status: SUCCESS, data })
+        })
+        .catch(error => {
+            console.log(error)
+            res.send({ status: FAIL, msg: '获取全部试卷失败，请重新尝试'})
+        })
+})
+
+// 获取综合测评试卷
+router.get('/paper-test', (req,res) => {
+    PaperModel.findOne({ papername: '综合测评' })
+        .then(paper => {
+            res.send({ status: SUCCESS, data: paper })
+        })
+        .catch(error => {
+            console.log(error)
+            res.send({ status: FAIL, msg: '获取综合测评试卷失败'})
+        })
+})
+
 // 编辑课程
 router.post('/paper-update', (req,res) => {
     const { _id, papername } = req.body

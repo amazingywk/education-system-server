@@ -98,6 +98,18 @@ router.post('/class-list', (req,res) => {
             }
         })
 })
+// 给班级添加一份试卷
+router.post('/class-paper', (req,res) => {
+    const { _id } = req.body
+    ClassModel.findOneAndUpdate({ _id }, req.body)
+        .then(c => {
+            res.send({ status: SUCCESS, data: c })
+        })
+        .catch(error => {
+            console.log(error)
+            res.send({ status: FAIL, msg: '添加试卷失败，请重新尝试' })
+        })
+})
 // 根据班级_id获取信息与课表信息
 router.get('/class-information/:_id', (req,res) => {
     const _id = req.params._id

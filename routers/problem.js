@@ -102,15 +102,7 @@ router.post('/problem-update', (req,res) => {
 
 // 获取并提交综合测评成绩
 router.post('/problem-test-score', (req,res) => {
-    const { _id, answer } = req.body
-    let num = 0
-    let unit = 100/answer.length
-    for(let i=0; i<answer.length; i++) {
-        if(answer[i]===TESTANSWER[i]) {
-            num++
-        }
-    }
-    let score = num*unit
+    const { _id, score } = req.body
     UserModel.findOneAndUpdate({ _id }, { testScore: score})
         .then(user => {
             res.send({ status: SUCCESS, data: { user,score } })

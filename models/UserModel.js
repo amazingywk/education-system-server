@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema({
     phone: { type: Number, required: false },
     gender: { type: String, required: true },
     role: { type: String, required: true },
-    disabled: { type: Boolean, default: true },
+    disabled: { type: Boolean, default: false },
     classBelong: {type: String, default: null },
     testScore: { type: Number, default: -1 }
 })

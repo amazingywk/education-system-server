@@ -5,7 +5,8 @@ const classSchema = new mongoose.Schema({
     number: { type: String, required: true },
     teacher: { type: Array },
     students: { type: Array },
-    timetable: { type: String }
+    timetable: { type: String },
+    paper: { type: Array }
 })
 
 //定义Model(与集合对应，可以操作集合)
